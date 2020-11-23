@@ -1,5 +1,5 @@
-@startuml Mastermind_PublicView_v3_0_1
-    title Mastermind_PublicView v3.0.1
+@startuml Mastermind_PublicView_v3_0_2
+    title Mastermind_PublicView v3.0.2
 
     note as N1
     <b>instanceOf(team)</b>
