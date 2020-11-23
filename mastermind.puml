@@ -1,91 +1,84 @@
 @startuml Mastermind_PublicView_v3_0_1
+    title Mastermind_PublicView v3.0.1
 
-title Mastermind_PublicView v3.0.1
+    note as N1
+    <b>instanceOf(team)</b>
+    - Alberto Morales a.k.a kodenix
+    - Antonio Cruz Vela
+    - José Carlos Fernández Bermejo
+    - Juan Antonio Pavón Carmona
+    - Carlos Barea
+    - Carlos Sánchez
+    - Maitere Pagola
+    - Rubén Badenas
+    end note
 
-note as N1
-  <b>instanceOf(team)</b>
-  - Alberto Morales a.k.a kodenix
-  - Antonio Cruz Vela
-  - José Carlos Fernández Bermejo
-  - Juan Antonio Pavón Carmona
-  - Carlos Barea
-  - Carlos Sánchez
-  - Maitere Pagola
-  - Rubén Badenas
-end note
+    class Mastermind {
+        +Mastermind()
+        +play() : void
+    }
 
+    class Attempt{
+        +Attempt(SecretCombination)
+        +isWinner() : bool
+    }
 
-class Mastermind {
-    +Mastermind()
-    +play() : void
-}
+    class Result{
+        +Result(whites: int, blacks: int)
+        +getWhites() : int
+        +getBlacks() : int
+    }
 
-class Attempt{
-    +Attempt(SecretCombination)
-    +isWinner() : bool
-}
+    enum Color{
+        RED('r')
+        GREEN('g')
+        BLUE ('b')
+        YELLOW('y')
+        ORANGE('o')
+        PINK('p')
+        +{static} valueOf(color: char) : Color
+        +getColor() : char
+    }
 
+    abstract class Combination{
+    }
 
-class Result{
-    +Result(whites: int, blacks: int)
-    +getWhites() : int
-    +getBlacks() : int
-}
+    class SecretCombination{
+        +SecretCombination()
+        +evalueCombination(ProposedCombination) : Result
+    }
 
-enum Color{
-    RED('r')
-    GREEN('g')
-    BLUE ('b')
-    YELLOW('y')
-    ORANGE('o')
-    PINK('p')
-    +{static} getAvailableColors() : string
-    +{static} getColorByChar(char) : Color
-    +isSameColorAs(color : Color) : bool
-}
+    class ProposedCombination{
+        +ProposedCombination()
+        +toString() : string
+        +read(): void
+    }
 
-abstract class Combination{
-}
+    class Console{
+        +write(promptMessage : string) : void
+        +read(promptMessage : string) : string
+    }
 
-class SecretCombination{
-    +SecretCombination()
-    +evalueCombination(ProposedCombination) : Result
-}
+    Class Message {
+        +showAttents(Attemt [])
+        +showError(ProposedCombination)
+        +showResume()
+        +showWinner()
+    }
 
-class ProposedCombination{
-    +ProposedCombination()
-    +read(): void
-}
+    Mastermind *--> SecretCombination
+    Mastermind *--> "0..10" Attempt
+    Mastermind ..> Message
 
-class Console{
-    +write(promptMessage : string) : void
-    +read(promptMessage : string) : string
-}
+    Combination ^-- SecretCombination
+    Combination ^-- ProposedCombination
+    Combination *--> "4" Color
 
-Class Message {
-    +showAttents(Attemt [])
-    +showError(ProposedCombination)
-    +showResume()
-    +showWinner()
-}
+    Attempt *--> ProposedCombination
+    Attempt *--> Result
+    Attempt ..> SecretCombination
 
+    Attempt ..> Message
 
-
-Mastermind *--> SecretCombination
-Mastermind *--> "0..10" Attempt
-Mastermind *-down-> Message
-
-Combination ^-- SecretCombination
-Combination ^-- ProposedCombination
-Combination *--> "4" Color
-
-Attempt *--> ProposedCombination
-Attempt *--> Result
-Attempt ..> SecretCombination
-
-Attempt --> Message
-
-Message --> Console
-
-
+    Message ..> Console
 @enduml
