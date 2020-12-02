@@ -1,29 +1,55 @@
-enum Color
-{
-    RED('r'),
-    BLUE('b'),
-    GREEN('g'),
-    YELLOW('y'),
-    PINK('p'),
-    ORANGE('o');
+public enum Color {
 
-    private char keyword;
+	RED('r'),
+	GREEN('g'),
+	BLUE('b'),
+	YELLOW('y'),
+	ORANGE('o'),
+	PINK('p');
 
-    private Color(char keyword) {
-        this.keyword = keyword;
-    }
+	private final char colorLetter;
 
-    public static Color valueOf(char character)
-    {
-        for (Color color: Color.values()) {
-            if (color.keyword == character) {
-                return color;
-            }
-        }
-        return null;
-    }
+	private Color(char colorLetter) {
+		this.colorLetter = colorLetter;
+	}
+
+	public static String getAvailableColors() {
+
+		String availableColors = "";
+
+		for (Color color: Color.values()) {
+			availableColors+= color.toString();
+		}
+
+		return availableColors;
+	}
+
+	public static Color getColorByChar(char colorLetter) {
+
+		String textColor = String.valueOf(colorLetter);
+
+		for (Color color: Color.values()) {
+
+			String  currentTextColor= color.toString();
+			if (currentTextColor.equals(textColor)) {
+				return color;
+			}
+		}
+
+		return null;
+
+	}
+
+	public boolean isSameColorAs(Color color) {
+		return this == color;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.colorLetter);
+	}
 
     public char getColor() {
-        return this.keyword;
+        return this.colorLetter;
     }
 }
