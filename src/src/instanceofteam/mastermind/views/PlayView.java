@@ -16,10 +16,31 @@ public class PlayView extends SubView{
 
             do {
                 combination = console.read(Message.COMBINATION_ENTER.toString());
-            } while(!this.game.isValidCombination(combination));
+            } while(!isValidCombination(combination));
 
-            this.game.setCombination(combination);
+            this.game.addCombination(combination);
 
         } while (!this.game.isMastermind());
-	}
+    }
+
+    private boolean isValidCombination(String combination) {
+        Console console = new Console();
+        int length = combination.length();
+
+        if (length != this.game.getNumAttempts()) {
+            combination = console.read(Message.COMBINATION_WRONG_LENGTH.toString());
+            return false;
+        }
+
+        if (!this.game.isValidColors(combination)) {
+            combination = console.read(Message.COMBINATION_WRONG_COLOR.toString() + this.game.getValidColors());
+            return false;
+        }
+
+        if (this.game.containRepeats(combination)) {
+            combination = console.read(Message.COMBINATION_WRONG_DUPLICATE_COLOR.toString());
+            return false;
+        }
+        return true;
+    }
 }
