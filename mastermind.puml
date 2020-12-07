@@ -1,84 +1,187 @@
-@startuml Mastermind_PublicView_v3_0_2
-    title Mastermind_PublicView v3.0.2
+-@startuml Mastermind_MV_v1_0_0
+    title Mastermind_MV v1.0.0
 
-    note as N1
-    <b>instanceOf(team)</b>
-    - Alberto Morales a.k.a kodenix
-    - Antonio Cruz Vela
-    - José Carlos Fernández Bermejo
-    - Juan Antonio Pavón Carmona
-    - Carlos Barea
-    - Carlos Sánchez
-    - Maitere Pagola
-    - Rubén Badenas
-    end note
-
-    class Mastermind {
-        +Mastermind()
-        +play() : void
+    package "instanceOfTeam.mastermin" {
+        class Mastermind {
+            - view: View
+            - game: Game
+            ~ Mastermind()
+            - play()
+            + main()
+        }
     }
 
-    class Attempt{
-        +Attempt(SecretCombination)
-        +isWinner() : bool
+    package "instanceOfTeam.mastermin.models" {
+        Class Game {
+            -int NUM_ATTEMPTS
+            +{static} int LENGTH_COMBINATION
+            +reset()
+            +isMastermind(): boolean
+            +isWinner(): boolean
+            +addCombination(String combination)
+            +isValidColors(): boolean
+            +getValidColors(): String
+            +getCurrentNumAttempts(): boolean
+            +getAttemptsResult(): ArrayList<String>
+        }
+
+        class Attempt{
+            ~Attempt(SecretCombination)
+            ~isWinner() : bool
+            ~getResultBlacks(): int
+            ~getResultWhite(): int
+            +toString(): String;
+        }
+
+        class Result{
+            ~Result(whites: int, blacks: int)
+            ~getWhites() : int
+            ~getBlacks() : int
+        }
+
+        enum Color{
+            RED('r')
+            GREEN('g')
+            BLUE ('b')
+            YELLOW('y')
+            ORANGE('o')
+            PINK('p')
+            ~valueOf(color: char) : Color
+            ~exist(char colorletter): boolean
+            ~getColors() : String
+        }
+
+        abstract class Combination{
+            ~Combination(String)
+            +toString() : String
+        }
+
+        class SecretCombination{
+            ~SecretCombination()
+            ~evalueCombination(ProposedCombination) : Result
+        }
+
+        class ProposedCombination{
+        }
+
     }
 
-    class Result{
-        +Result(whites: int, blacks: int)
-        +getWhites() : int
-        +getBlacks() : int
+    package "instanceOfTeam.mastermin.views" {
+        Class View {
+            +View(Game)
+            +interact(): void
+        }
+
+        abstract Class SubView {
+            ~ Subview(Game)
+        }
+
+        Class PlayView {
+            ~ interact()
+        }
+
+        Class AttemptView {
+            ~ interact()
+        }
+
+        Class ResumeView {
+            ~ interact(): boolean
+        }
+        Class StartView {
+            ~ interact()
+        }
+
+        Enum Message {
+            START_TITLE
+            ATTEMP_CAPTION
+            COMBINATION_ENTER
+            COMBITACION_WRONG_COLOR
+            COMBINATION_WRONG_LENGHT
+            COMBINATION_WRONG_DUPLICATE_COLOR
+            RESULT_BLACKS
+            RESULT_WHITES
+            RESULT_SEPARATOR
+            WINNER
+            LOSER
+            RESUMEN
+
+            -Message: String
+            +toString(): String
+        }
     }
 
-    enum Color{
-        RED('r')
-        GREEN('g')
-        BLUE ('b')
-        YELLOW('y')
-        ORANGE('o')
-        PINK('p')
-        +{static} valueOf(color: char) : Color
-        +getColor() : char
+    package "instanceOfTeam.utils" {
+        class Console{
+            +write(promptMessage : string) : void
+            +read(promptMessage : string) : string
+        }
     }
 
-    abstract class Combination{
-    }
 
-    class SecretCombination{
-        +SecretCombination()
-        +evalueCombination(ProposedCombination) : Result
-    }
+    ' class Mastermind {
+    '     +Mastermind()
+    '     +play() : void
+    ' }
 
-    class ProposedCombination{
-        +ProposedCombination()
-        +toString() : string
-        +read(): void
-    }
 
-    class Console{
-        +write(promptMessage : string) : void
-        +read(promptMessage : string) : string
-    }
 
-    Class Message {
-        +showAttents(Attemt [])
-        +showError(ProposedCombination)
-        +showResume()
-        +showWinner()
-    }
 
-    Mastermind *--> SecretCombination
-    Mastermind *--> "0..10" Attempt
-    Mastermind ..> Message
+
+
+    ' Class Message {
+    '     +showAttents(Attemt [])
+    '     +showError(ProposedCombination)
+    '     +showResume()
+    '     +showWinner()
+    ' }
+
+    Mastermind *-down-> Game
+    Mastermind *-down-> View
+
+    Game *--> SecretCombination
+    Game *--> "0..10" Attempt
+    Game ..> ProposedCombination
+    Game ..> Color
 
     Combination ^-- SecretCombination
     Combination ^-- ProposedCombination
-    Combination *--> "4" Color
+    Combination "LENGTH_COMBINATION" *-->  Color
 
     Attempt *--> ProposedCombination
     Attempt *--> Result
     Attempt ..> SecretCombination
 
-    Attempt ..> Message
 
-    Message ..> Console
+    View *--> PlayView
+    View *--> StartView
+    View *--> ResumeView
+    View *--> Game
+
+    SubView *--> Game
+
+    SubView <|-down- PlayView
+    SubView <|-down- StartView
+    SubView <|-down- ResumeView
+    SubView <|-down- AttemptView
+
+    StartView ..> Game
+    StartView .down.> Message
+    StartView .down.> Console
+
+    PlayView *-down-> AttemptView
+    PlayView .down.> Message
+    PlayView .down.> Console
+    PlayView ..> Attempt
+    PlayView ..> Game
+
+
+    AttemptView ..> Game
+    AttemptView .down.> Message
+    AttemptView .down.> Console
+
+
+    ResumeView .down.> Message
+    ResumeView ..> Game
+    ResumeView .down.> Console
+
 @enduml
