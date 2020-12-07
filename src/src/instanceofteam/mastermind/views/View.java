@@ -10,7 +10,7 @@ public class View {
 
 	public View (Game game) {
 		this.game = game;
-		this.startView = new StartView(this.game);
+		this.startView = new StartView();
 		this.playView = new PlayView(this.game);
 		this.resumeView = new ResumeView(this.game);
 	}

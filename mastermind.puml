@@ -160,11 +160,9 @@
     SubView *--> Game
 
     SubView <|-down- PlayView
-    SubView <|-down- StartView
     SubView <|-down- ResumeView
     SubView <|-down- AttemptView
 
-    StartView ..> Game
     StartView .down.> Message
     StartView .down.> Console
 
