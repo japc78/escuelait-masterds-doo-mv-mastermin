@@ -52,7 +52,9 @@ public class Game {
     public ArrayList<String> getAttemptsResult() {
         ArrayList<String> results = new ArrayList<>();
         for (Attempt attempt : attempts) {
-            results.add(attempt.toString() + "," + attempt.getResultBlacks() + "," + attempt.getResultWhites());
+            results.add(attempt.toString() +
+                "," + attempt.getResult().getBlacks() +
+                "," + attempt.getResult().getWhites());
         }
         return results;
     }

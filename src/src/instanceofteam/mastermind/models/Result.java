@@ -10,11 +10,11 @@ public class Result {
         this.whites = whites;
 	}
 
-	public int getWhites() {
+	int getWhites() {
 		return whites;
 	}
 
-	public int getBlacks() {
+	int getBlacks() {
 		return blacks;
 	}
 }

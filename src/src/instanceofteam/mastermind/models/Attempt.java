@@ -4,24 +4,20 @@ class Attempt {
 	private ProposedCombination proposedCombination;
 	private Result result;
 
-	public Attempt(ProposedCombination proposedCombination, SecretCombination secretCombination) {
+	Attempt(ProposedCombination proposedCombination, SecretCombination secretCombination) {
 		this.proposedCombination = proposedCombination;
 		this.result = secretCombination.evaluateCombination(this.proposedCombination);
 	}
 
-	public boolean isWinner() {
+	boolean isWinner() {
 		if (this.result.getBlacks() == ProposedCombination.LENGTH) {
 			return true;
 		}
 		return false;
 	}
 
-	public int getResultBlacks() {
-		return this.result.getBlacks();
-	}
-
-	public int getResultWhites() {
-		return this.result.getWhites();
+	Result getResult() {
+		return this.result;
 	}
 
 	@Override
