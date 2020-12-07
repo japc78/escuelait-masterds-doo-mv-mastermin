@@ -10,7 +10,7 @@ class Attempt {
 	}
 
 	boolean isWinner() {
-		if (this.result.getBlacks() == ProposedCombination.LENGTH) {
+		if (this.result.getBlacks() == Game.LENGTH_COMBINATION) {
 			return true;
 		}
 		return false;

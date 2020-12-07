@@ -1,7 +1,7 @@
 package instanceofteam.mastermind.models;
 
 abstract class Combination {
-	public static final int LENGTH = 4;
+	final int LENGTH = Game.LENGTH_COMBINATION;
 	Color[] colors;
 
 	Combination() {

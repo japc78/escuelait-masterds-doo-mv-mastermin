@@ -6,6 +6,8 @@ public class Game {
 	private ArrayList<Attempt> attempts;
     private SecretCombination secretCombination;
     private final int NUM_ATTEMPTS = 10;
+    public static final int LENGTH_COMBINATION = 4;
+
 
     public Game() {
         this.reset();
@@ -58,10 +60,6 @@ public class Game {
         }
         return results;
     }
-
-    public int getLengthCombination(){
-		return Combination.LENGTH;
-    };
 
     public String getSecretCombination() {
         return this.secretCombination.toString();

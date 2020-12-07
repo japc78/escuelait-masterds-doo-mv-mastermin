@@ -36,7 +36,7 @@ public class AttemptView extends SubView {
         Console console = new Console();
         int length = combinationLetters.length();
 
-        if (length != this.game.getLengthCombination()) {
+        if (length != Game.LENGTH_COMBINATION) {
             combinationLetters = console.read(Message.COMBINATION_WRONG_LENGTH.toString());
             return false;
         }
