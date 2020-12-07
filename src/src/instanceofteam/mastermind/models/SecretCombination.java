@@ -6,7 +6,7 @@ class SecretCombination extends Combination {
 		String randomCombination = this.getRandomCombination();
 
 		for (int i = 0; i < LENGTH; i++) {
-			colors[i] = Color.getColorByChar(randomCombination.charAt(i));
+			colors[i] = Color.valueOf(randomCombination.charAt(i));
 		}
 	}
 

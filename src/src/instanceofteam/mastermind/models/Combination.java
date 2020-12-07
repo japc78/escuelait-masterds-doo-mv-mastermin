@@ -12,7 +12,7 @@ abstract class Combination {
 		this.colors = new Color[LENGTH];
 
 		for (int i = 0; i < colors.length; i++) {
-			colors[i] = Color.getColorByChar(combinationLetters.charAt(i));
+			colors[i] = Color.valueOf(combinationLetters.charAt(i));
 		}
 	}
 

@@ -20,13 +20,13 @@ enum Color {
 	static boolean exist(char colorLetter) {
 		List<Color> colors = Arrays.asList(Color.values());
 
-		if (colors.contains(getColorByChar(colorLetter))) {
+		if (colors.contains(valueOf(colorLetter))) {
 			return true;
 		}
 		return false;
 	}
 
-	static Color getColorByChar(char colorLetter) {
+	static Color valueOf(char colorLetter) {
 		for (Color color: Color.values()) {
 			if (color.colorLetter == colorLetter) {
 				return color;
