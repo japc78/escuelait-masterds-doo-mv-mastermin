@@ -8,33 +8,33 @@ public class Game {
     private final int NUM_ATTEMPTS = 10;
 
     public Game() {
+        this.reset();
+    }
+
+    public void reset() {
         this.attempts = new ArrayList<Attempt>();
         this.secretCombination = new SecretCombination();
     }
 
 	public boolean isMastermind() {
-        if (attempts.size() <= NUM_ATTEMPTS) {
+        if ((attempts.size() <= NUM_ATTEMPTS) && !isWinner()) {
             return true;
         }
 		return false;
     }
 
+    public boolean isWinner() {
+        return attempts.get(attempts.size()-1).isWinner();
+    }
+
     public void addCombination(String combination) {
-        this.attempts.add(new Attempt(new ProposedCombination(combination), secretCombination));
+        Attempt attempt = new Attempt(new ProposedCombination(combination), secretCombination);
+        this.attempts.add(attempt);
     }
 
     public boolean isValidColors(String combination) {
-        for (String colorLetter : combination.split(combination)) {
-            if(!Color.exist(colorLetter.charAt(0))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean containRepeats(String combination) {
-        for (String letterColor : combination.split(combination)) {
-            if (combination.indexOf(letterColor) > 1) {
+        for (char colorLetter : combination.toCharArray()) {
+            if(!Color.exist(colorLetter)) {
                 return false;
             }
         }
@@ -45,7 +45,23 @@ public class Game {
         return Color.getColors();
     }
 
-    public int getNumAttempts() {
-        return NUM_ATTEMPTS;
+    public int getCurrentNumAttempts() {
+        return attempts.size();
+    }
+
+    public ArrayList<String> getAttemptsResult() {
+        ArrayList<String> results = new ArrayList<>();
+        for (Attempt attempt : attempts) {
+            results.add(attempt.toString() + "," + attempt.getResultBlacks() + "," + attempt.getResultWhites());
+        }
+        return results;
+    }
+
+    public int getLengthCombination(){
+		return Combination.LENGTH;
+    };
+
+    public String getSecretCombination() {
+        return this.secretCombination.toString();
     }
 }
