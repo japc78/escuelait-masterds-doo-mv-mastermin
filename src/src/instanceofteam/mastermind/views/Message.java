@@ -24,9 +24,4 @@ enum Message {
 	public String toString() {
 		return this.message;
     }
-
-    public static void main(String[] args) {
-        System.out.println(Message.START_TITLE.toString());
-    }
-
 }
