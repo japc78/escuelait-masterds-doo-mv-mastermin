@@ -12,10 +12,14 @@ public class ResumeView extends SubView {
 		Console console = new Console();
 		String response;
 		do {
+			if (!this.game.isWinner()) {
+				console.write(Message.LOSER.toString());
+			}
 			response = console.read(Message.RESUMEN.toString());
 		} while(!isYesOrNot(response));
 
 		if (response.equalsIgnoreCase("y")) {
+			this.game.reset();
 			return true;
 		}
 		return false;
