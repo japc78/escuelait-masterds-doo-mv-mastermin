@@ -27,13 +27,13 @@ public class Game {
         return attempts.get(attempts.size()-1).isWinner();
     }
 
-    public void addCombination(String combination) {
-        Attempt attempt = new Attempt(new ProposedCombination(combination), secretCombination);
+    public void addCombination(String combinationLetters) {
+        Attempt attempt = new Attempt(new ProposedCombination(combinationLetters), secretCombination);
         this.attempts.add(attempt);
     }
 
-    public boolean isValidColors(String combination) {
-        for (char colorLetter : combination.toCharArray()) {
+    public boolean isValidColors(String combinationLetters) {
+        for (char colorLetter : combinationLetters.toCharArray()) {
             if(!Color.exist(colorLetter)) {
                 return false;
             }

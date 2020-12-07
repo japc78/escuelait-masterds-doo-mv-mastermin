@@ -8,11 +8,11 @@ abstract class Combination {
 		this.colors = new Color[LENGTH];
 	}
 
-	Combination(String combination) {
+	Combination(String combinationLetters) {
 		this.colors = new Color[LENGTH];
 
 		for (int i = 0; i < colors.length; i++) {
-			colors[i] = Color.getColorByChar(combination.charAt(i));
+			colors[i] = Color.getColorByChar(combinationLetters.charAt(i));
 		}
 	}
 
